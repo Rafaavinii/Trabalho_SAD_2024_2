@@ -39,3 +39,42 @@ def grafico_colunas(anos, incidentes):
 
     # Exibir o gráfico no Streamlit
     st.pyplot(fig)
+    
+def grafico_linhas(df_ano, tipos_incidentes):
+    meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
+             'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+    
+    # Ordenar o DataFrame pelos meses 
+    df_ano = df_ano.copy()
+    df_ano['Mes'] = pd.Categorical(df_ano['Mes'], categories=meses, ordered=True)
+    df_ano = df_ano.sort_values('Mes')
+    
+    plt.figure(figsize=(15, 8))
+    
+    # Plotar cada tipo de incidente
+    for incidente in tipos_incidentes:
+        if incidente in df_ano.columns:
+            plt.plot(df_ano['Mes'], df_ano[incidente], 
+                    marker='o', 
+                    linewidth=2, 
+                    markersize=8, 
+                    label=incidente)
+    
+    plt.title('Distribuição de Incidentes de Segurança por Mês (2019)', 
+             fontsize=16, pad=20)
+    plt.xlabel('Mês', fontsize=12, labelpad=10)
+    plt.ylabel('Quantidade de Incidentes', fontsize=12, labelpad=10)
+    
+    plt.xticks(rotation=45, ha='right')
+    
+    plt.grid(True, linestyle='--', alpha=0.7)
+    
+    # Legenda do gráfico
+    plt.legend(bbox_to_anchor=(1.05, 1), 
+              loc='upper left', 
+              title='Tipos de Incidentes',
+              title_fontsize=12)
+    
+    plt.tight_layout()
+    
+    st.pyplot(plt)

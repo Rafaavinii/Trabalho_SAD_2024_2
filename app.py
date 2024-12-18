@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from graficos import grafico, grafico_colunas
+from graficos import grafico, grafico_colunas, grafico_linhas
 
 
 df = pd.read_csv('cert_2010-2019.csv', sep=';')
@@ -22,3 +22,6 @@ grafico(total_incidentes_2018, '2018')
 
 st.markdown ("## Gráficos de Colunas")
 grafico_colunas(anos, incidentes)
+
+st.markdown("## Gráficos de Linhas para 2019")
+grafico_linhas(df_2019, ['Worm', 'Invasao', 'DOS', 'Outros', 'Scan', 'Web', 'Fraude'])
